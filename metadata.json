@@ -1,0 +1,9 @@
+{
+  "name": "Remix: Copy of Copy of Copy of  UzhavanForum final",
+  "description": "Smart Farming AI Advisory System",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

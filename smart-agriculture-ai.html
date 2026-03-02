@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Agriculture AI Decision Platform</title>
+  <style>
+    :root {
+      --g1: #0a3d1f;
+      --g2: #1a6b3c;
+      --g3: #27ae60;
+      --g4: #2ecc71;
+      --b1: #0d2b4e;
+      --b2: #1565c0;
+      --b3: #2196f3;
+      --b4: #64b5f6;
+      --card: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #e8f5e9;
+      --muted: #a5d6a7;
+      --warn: #ff6b35;
+      --danger: #e53935;
+      --success: #00e676;
+      --radius: 16px;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--g1) 0%, var(--b1) 50%, var(--g1) 100%);
+      min-height: 100vh;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 61, 31, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--g4);
+    }
+
+    .nav-brand span {
+      font-size: 1.6rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all .25s;
+    }
+
+    .nav-links a:hover {
+      background: var(--g3);
+      color: #fff;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 64px 24px 48px;
+      background: linear-gradient(180deg, rgba(39, 174, 96, 0.1) 0%, transparent 100%);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--g4), var(--b4));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .stat-chip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 8px 20px;
+      font-size: 0.9rem;
+      color: var(--g4);
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 0 8px rgba(46, 204, 113, 0);
+      }
+    }
+
+    /* MAIN */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* SECTION */
+    .module {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow);
+      animation: fadeIn .5s ease both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .module-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .module-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--g3), var(--b3));
+      flex-shrink: 0;
+    }
+
+    .module-header h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--g4);
+    }
+
+    .module-header p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* GRID */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    input,
+    select,
+    textarea {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--g3);
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
+    }
+
+    select option {
+      background: #1a2a1a;
+    }
+
+    /* BUTTON */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--g3), var(--b3));
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(33, 150, 243, 0.4);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger), #c62828);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(229, 57, 53, 0.4);
+    }
+
+    .btn-sm {
+      padding: 7px 16px;
+      font-size: 0.82rem;
+    }
+
+    /* RESULT CARD */
+    .result-card {
+      background: linear-gradient(135deg, rgba(39, 174, 96, 0.12), rgba(33, 150, 243, 0.12));
+      border: 1px solid rgba(46, 204, 113, 0.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn .4s ease;
+    }
+
+    .result-card.show {
+      display: block;
+    }
+
+    .result-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .result-main {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .result-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .chip-green {
+      background: rgba(0, 230, 118, 0.15);
+      color: var(--success);
+      border: 1px solid rgba(0, 230, 118, 0.3);
+    }
+
+    .chip-blue {
+      background: rgba(100, 181, 246, 0.15);
+      color: var(--b4);
+      border: 1px solid rgba(100, 181, 246, 0.3);
+    }
+
+    .chip-red {
+      background: rgba(255, 107, 53, 0.15);
+      color: var(--warn);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+    }
+
+    .chip-yellow {
+      background: rgba(255, 193, 7, 0.15);
+      color: #ffc107;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    /* PROGRESS BAR */
+    .prog-bar {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      height: 10px;
+      overflow: hidden;
+      margin: 6px 0;
+    }
+
+    .prog-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width .7s ease;
+    }
+
+    .fill-green {
+      background: linear-gradient(90deg, var(--g4), var(--b4));
+    }
+
+    .fill-red {
+      background: linear-gradient(90deg, var(--danger), var(--warn));
+    }
+
+    /* HISTORY TABLE */
+    .history-section {
+      margin-top: 24px;
+    }
+
+    .history-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .history-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .history-list::-webkit-scrollbar-thumb {
+      background: var(--g3);
+      border-radius: 4px;
+    }
+
+    .history-item {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background .2s;
+    }
+
+    .history-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .history-date {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    /* ALERT BOX */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: none;
+      animation: fadeIn .4s ease;
+    }
+
+    .alert.show {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-high {
+      background: rgba(229, 57, 53, 0.15);
+      border: 1px solid rgba(229, 57, 53, 0.4);
+      color: #ef9a9a;
+    }
+
+    .alert-medium {
+      background: rgba(255, 193, 7, 0.15);
+      border: 1px solid rgba(255, 193, 7, 0.4);
+      color: #ffd54f;
+    }
+
+    .alert-low {
+      background: rgba(0, 230, 118, 0.15);
+      border: 1px solid rgba(0, 230, 118, 0.4);
+      color: #a5d6a7;
+    }
+
+    /* SOIL TWIN */
+    .npk-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .npk-label {
+      width: 28px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .npk-label.n {
+      color: #66bb6a;
+    }
+
+    .npk-label.p {
+      color: #42a5f5;
+    }
+
+    .npk-label.k {
+      color: #ff7043;
+    }
+
+    .npk-track {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      height: 14px;
+      overflow: hidden;
+    }
+
+    .npk-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width .7s ease;
+    }
+
+    .n-fill {
+      background: linear-gradient(90deg, #66bb6a, #43a047);
+    }
+
+    .p-fill {
+      background: linear-gradient(90deg, #42a5f5, #1976d2);
+    }
+
+    .k-fill {
+      background: linear-gradient(90deg, #ff7043, #d84315);
+    }
+
+    .npk-val {
+      width: 36px;
+      text-align: right;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    /* MANDI TABLE */
+    .mandi-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .mandi-table th {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 14px;
+      text-align: left;
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .mandi-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .mandi-table tr:hover td {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .up {
+      color: var(--success);
+    }
+
+    .down {
+      color: var(--danger);
+    }
+
+    .stable {
+      color: #ffc107;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:600px) {
+      nav {
+        padding: 0 14px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .module {
+        padding: 20px 16px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-links">
+      <a href="#risk">Risk &amp; Profit</a>
+      <a href="#soil">Soil Twin</a>
+      <a href="#pest">Pest AI</a>
+      <a href="#mandi">Mandi</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Smart Agriculture AI Decision Platform</h1>
+    <p>AI-powered insights for modern farming — predict yield, monitor soil health, detect pest risks, and forecast
+      mandi prices.</p>
+    <div class="stats-bar">
+      <div class="stat-chip">🌱 4 AI Modules</div>
+      <div class="stat-chip">💾 Auto-Saved</div>
+      <div class="stat-chip">📊 Real-time Analysis</div>
+      <div class="stat-chip">🔒 100% Offline</div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ════════════════════════════════════════════
+     MODULE 1: RISK + PROFIT PREDICTION
+════════════════════════════════════════════ -->
+    <section class="module" id="risk" style="animation-delay:.1s">
+      <div class="module-header">
+        <div class="module-icon">🎯</div>
+        <div>
+          <h2>AI Risk &amp; Profit Prediction Engine</h2>
+          <p>Enter soil &amp; market data to get AI-powered crop recommendation</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Soil Nitrogen (kg/ha)</label>
+          <input type="number" id="rp-n" placeholder="e.g. 80" min="0" max="300">
+        </div>
+        <div class="form-group">
+          <label>Soil Phosphorus (kg/ha)</label>
+          <input type="number" id="rp-p" placeholder="e.g. 60" min="0" max="300">
+        </div>
+        <div class="form-group">
+          <label>Soil Potassium (kg/ha)</label>
+          <input type="number" id="rp-k" placeholder="e.g. 70" min="0" max="300">
+        </div>
+        <div class="form-group">
+          <label>Acre Size</label>
+          <input type="number" id="rp-acre" placeholder="e.g. 5" min="0.1" max="500">
+        </div>
+        <div class="form-group">
+          <label>Crop History</label>
+          <select id="rp-crop">
+            <option value="">Select crop</option>
+            <option value="Maize">Maize</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Rice">Rice</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Sugarcane">Sugarcane</option>
+            <option value="Soybean">Soybean</option>
+            <option value="Tomato">Tomato</option>
+            <option value="Onion">Onion</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Weather Forecast</label>
+          <select id="rp-weather">
+            <option value="Good">Good</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Poor">Poor</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Market Trend</label>
+          <select id="rp-market">
+            <option value="Rising">Rising 📈</option>
+            <option value="Stable">Stable ↔️</option>
+            <option value="Falling">Falling 📉</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="rp-calc-btn">🤖 Analyse &amp; Predict</button>
+
+      <div class="result-card" id="rp-result">
+        <div class="result-title">AI Prediction Result</div>
+        <div class="result-main" id="rp-result-text"></div>
+        <div class="result-chips" id="rp-chips"></div>
+        <div style="margin-top:14px;">
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:4px;">Risk Level</div>
+          <div class="prog-bar">
+            <div class="prog-fill fill-red" id="rp-risk-bar" style="width:0%"></div>
+          </div>
+          <div style="font-size:.8rem;color:var(--muted);margin-top:6px;">Expected Profit Confidence</div>
+          <div class="prog-bar">
+            <div class="prog-fill fill-green" id="rp-profit-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="history-section">
+        <div class="history-title">
+          <span>📋 Prediction History</span>
+          <button class="btn btn-danger btn-sm" id="rp-clear-btn">Clear</button>
+        </div>
+        <div class="history-list" id="rp-history"></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+     MODULE 2: SOIL DIGITAL TWIN
+════════════════════════════════════════════ -->
+    <section class="module" id="soil" style="animation-delay:.2s">
+      <div class="module-header">
+        <div class="module-icon">🌍</div>
+        <div>
+          <h2>Soil Digital Twin</h2>
+          <p>Track seasonal NPK values, depletion trends &amp; rotation suggestions</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Season</label>
+          <select id="st-season">
+            <option>Kharif 2024</option>
+            <option>Rabi 2024-25</option>
+            <option>Zaid 2025</option>
+            <option>Kharif 2025</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Nitrogen (N) kg/ha</label>
+          <input type="number" id="st-n" placeholder="e.g. 90" min="0" max="500">
+        </div>
+        <div class="form-group">
+          <label>Phosphorus (P) kg/ha</label>
+          <input type="number" id="st-p" placeholder="e.g. 65" min="0" max="500">
+        </div>
+        <div class="form-group">
+          <label>Potassium (K) kg/ha</label>
+          <input type="number" id="st-k" placeholder="e.g. 75" min="0" max="500">
+        </div>
+        <div class="form-group">
+          <label>Field Name / ID</label>
+          <input type="text" id="st-field" placeholder="e.g. Field-A">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="st-save-btn">💾 Save Soil Profile</button>
+
+      <div class="result-card show" id="st-profile" style="display:block;">
+        <div class="result-title">Current Soil Profile</div>
+        <div id="st-viz">
+          <div class="npk-bar"><span class="npk-label n">N</span>
+            <div class="npk-track">
+              <div class="npk-fill n-fill" id="sv-n" style="width:0%"></div>
+            </div><span class="npk-val" id="sv-nv">—</span>
+          </div>
+          <div class="npk-bar"><span class="npk-label p">P</span>
+            <div class="npk-track">
+              <div class="npk-fill p-fill" id="sv-p" style="width:0%"></div>
+            </div><span class="npk-val" id="sv-pv">—</span>
+          </div>
+          <div class="npk-bar"><span class="npk-label k">K</span>
+            <div class="npk-track">
+              <div class="npk-fill k-fill" id="sv-k" style="width:0%"></div>
+            </div><span class="npk-val" id="sv-kv">—</span>
+          </div>
+        </div>
+        <div id="st-suggestion" style="margin-top:14px;font-size:.95rem;color:var(--g4);font-weight:600;"></div>
+      </div>
+
+      <div class="history-section">
+        <div class="history-title">
+          <span>📋 Soil Profile History</span>
+          <button class="btn btn-danger btn-sm" id="st-clear-btn">Clear</button>
+        </div>
+        <div class="history-list" id="st-history"></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+     MODULE 3: PEST OUTBREAK AI
+════════════════════════════════════════════ -->
+    <section class="module" id="pest" style="animation-delay:.3s">
+      <div class="module-header">
+        <div class="module-icon">🐛</div>
+        <div>
+          <h2>Predictive Pest Outbreak AI</h2>
+          <p>Identify disease &amp; pest risk based on environmental conditions</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Humidity (%)</label>
+          <input type="number" id="po-hum" placeholder="e.g. 80" min="0" max="100">
+        </div>
+        <div class="form-group">
+          <label>Temperature (°C)</label>
+          <input type="number" id="po-temp" placeholder="e.g. 32" min="0" max="55">
+        </div>
+        <div class="form-group">
+          <label>Crop Type</label>
+          <select id="po-crop">
+            <option value="">Select crop</option>
+            <option value="Paddy">Paddy / Rice</option>
+            <option value="Wheat">Wheat</option>
+            <option value="Maize">Maize</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Tomato">Tomato</option>
+            <option value="Potato">Potato</option>
+            <option value="Soybean">Soybean</option>
+            <option value="Sugarcane">Sugarcane</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Rainfall (mm, last 7 days)</label>
+          <input type="number" id="po-rain" placeholder="e.g. 20" min="0" max="500">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="po-calc-btn">🔍 Assess Pest Risk</button>
+
+      <div class="alert" id="po-alert"></div>
+
+      <div class="result-card" id="po-result">
+        <div class="result-title">Pest Risk Assessment</div>
+        <div class="result-main" id="po-result-text"></div>
+        <div class="result-chips" id="po-chips"></div>
+        <div style="margin-top:14px;">
+          <div style="font-size:.8rem;color:var(--muted);margin-bottom:4px;">Overall Pest Risk Score</div>
+          <div class="prog-bar">
+            <div class="prog-fill" id="po-risk-bar" style="width:0%"></div>
+          </div>
+        </div>
+        <div id="po-actions" style="margin-top:14px;font-size:.9rem;color:var(--b4);"></div>
+      </div>
+
+      <div class="history-section">
+        <div class="history-title">
+          <span>📋 Pest Assessment History</span>
+          <button class="btn btn-danger btn-sm" id="po-clear-btn">Clear</button>
+        </div>
+        <div class="history-list" id="po-history"></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════
+     MODULE 4: MANDI PRICE FORECASTING
+════════════════════════════════════════════ -->
+    <section class="module" id="mandi" style="animation-delay:.4s">
+      <div class="module-header">
+        <div class="module-icon">📈</div>
+        <div>
+          <h2>AI Mandi Price Forecasting</h2>
+          <p>Historical price trends &amp; next-week forecast for major crops</p>
+        </div>
+      </div>
+
+      <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <div class="form-group">
+          <label>Select Commodity</label>
+          <select id="mp-crop">
+            <option value="Wheat">Wheat</option>
+            <option value="Rice">Rice</option>
+            <option value="Maize">Maize</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Soybean">Soybean</option>
+            <option value="Potato">Potato</option>
+            <option value="Onion">Onion</option>
+            <option value="Tomato">Tomato</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Select Mandi</label>
+          <select id="mp-mandi">
+            <option>Delhi Azadpur</option>
+            <option>Mumbai APMC</option>
+            <option>Chennai Koyambedu</option>
+            <option>Bengaluru HOPCOMS</option>
+            <option>Kolkata Koley</option>
+            <option>Hyderabad Bowenpally</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="mp-btn">📊 Generate Forecast</button>
+
+      <div class="result-card" id="mp-result">
+        <div class="result-title">Market Intelligence Report</div>
+        <div class="result-main" id="mp-result-text"></div>
+        <div class="result-chips" id="mp-chips"></div>
+        <div style="margin-top:20px;">
+          <div
+            style="font-size:.82rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;">
+            6-Week Historical Price Trend</div>
+          <table class="mandi-table" id="mp-table">
+            <thead>
+              <tr>
+                <th>Week</th>
+                <th>Price (₹/qt)</th>
+                <th>Change</th>
+                <th>Trend</th>
+              </tr>
+            </thead>
+            <tbody id="mp-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    🌾 Smart Agriculture AI Decision Platform &nbsp;|&nbsp; All data stored locally in your browser &nbsp;|&nbsp; Built
+    for Indian Farmers
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // ─── UTILITY ───────────────────────────────────────────────
+      function ts() {
+        return new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      }
+      function loadLS(key) {
+        try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; }
+      }
+      function saveLS(key, data) {
+        try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) { console.warn('Storage full'); }
+      }
+      function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
+      function validate(ids) {
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          if (!el || el.value === '' || el.value === undefined) {
+            el && el.focus();
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // ─── MODULE 1: RISK + PROFIT ────────────────────────────────
+      (function riskProfit() {
+        const KEY = 'agri_rp_history';
+        const CROP_PRICE = { Maize: 2200, Wheat: 2500, Rice: 2100, Cotton: 6800, Sugarcane: 3500, Soybean: 4500, Tomato: 1500, Onion: 1800 };
+        const MARKET_MULT = { Rising: 1.18, Stable: 1.0, Falling: 0.82 };
+        const WEATHER_RISK = { Good: 10, Moderate: 30, Poor: 60 };
+
+        function calcRisk(weather, market) {
+          let r = WEATHER_RISK[weather] || 30;
+          if (market === 'Falling') r += 25;
+          else if (market === 'Rising') r -= 5;
+          return clamp(r, 5, 95);
+        }
+
+        function bestCrop(n, p, k) {
+          if (k > 150 && n > 100) return 'Cotton';
+          if (n > 120) return 'Sugarcane';
+          if (p > 80) return 'Wheat';
+          if (k > 100) return 'Maize';
+          return 'Rice';
+        }
+
+        function render(history) {
+          const el = document.getElementById('rp-history');
+          el.innerHTML = history.length
+            ? history.slice().reverse().map(h =>
+              `<div class="history-item">
+            <div>
+              <strong>${h.crop}</strong> &nbsp;
+              <span class="chip chip-green">₹${h.profit.toLocaleString('en-IN')}</span>
+              &nbsp;<span class="chip chip-red">Risk ${h.risk}%</span>
+            </div>
+            <div class="history-date">${h.date}</div>
+          </div>`).join('')
+            : '<div style="color:var(--muted);font-size:.85rem;padding:8px 0">No predictions yet.</div>';
+        }
+
+        document.getElementById('rp-calc-btn').addEventListener('click', function () {
+          if (!validate(['rp-n', 'rp-p', 'rp-k', 'rp-acre', 'rp-crop'])) {
+            alert('Please fill all fields.'); return;
+          }
+          const n = parseFloat(document.getElementById('rp-n').value);
+          const p = parseFloat(document.getElementById('rp-p').value);
+          const k = parseFloat(document.getElementById('rp-k').value);
+          const acre = parseFloat(document.getElementById('rp-acre').value);
+          const crop = document.getElementById('rp-crop').value;
+          const weather = document.getElementById('rp-weather').value;
+          const market = document.getElementById('rp-market').value;
+
+          const factor = 1.2;
+          const yieldKg = (n + p + k) * acre * factor;
+          const pricePerKg = (CROP_PRICE[crop] || 2000) / 100;
+          const profit = Math.round(yieldKg * pricePerKg * MARKET_MULT[market]);
+          const risk = calcRisk(weather, market);
+          const recommended = bestCrop(n, p, k);
+          const confidence = clamp(100 - risk, 20, 95);
+
+          document.getElementById('rp-result-text').textContent =
+            `Grow ${recommended}. Expected Profit ₹${profit.toLocaleString('en-IN')}. Risk ${risk}%.`;
+
+          document.getElementById('rp-chips').innerHTML = `
+        <span class="chip chip-green">🌾 ${recommended}</span>
+        <span class="chip chip-blue">📦 Yield ~${Math.round(yieldKg)} kg</span>
+        <span class="chip chip-red">⚠️ Risk ${risk}%</span>
+        <span class="chip chip-yellow">📈 ${market} Market</span>`;
+
+          document.getElementById('rp-risk-bar').style.width = risk + '%';
+          document.getElementById('rp-profit-bar').style.width = confidence + '%';
+
+          const res = document.getElementById('rp-result');
+          res.classList.add('show');
+
+          const history = loadLS(KEY);
+          history.push({ crop, profit, risk, weather, market, n, p, k, acre, date: ts() });
+          if (history.length > 50) history.shift();
+          saveLS(KEY, history);
+          render(history);
+          res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        document.getElementById('rp-clear-btn').addEventListener('click', function () {
+          if (confirm('Clear all prediction history?')) { saveLS(KEY, []); render([]); }
+        });
+
+        render(loadLS(KEY));
+      })();
+
+      // ─── MODULE 2: SOIL DIGITAL TWIN ───────────────────────────
+      (function soilTwin() {
+        const KEY = 'agri_soil_profiles';
+        const ROTATIONS = {
+          high_n: 'High Nitrogen — consider Legume rotation (Chickpea, Lentil) to balance nitrogen.',
+          low_n: 'Nitrogen deficit — apply Urea/DAP or grow Green Manure (Dhaincha).',
+          high_p: 'Adequate Phosphorus — suitable for Wheat, Maize & Pulses.',
+          low_p: 'Low Phosphorus — apply SSP/TSP fertiliser before sowing.',
+          high_k: 'Rich Potassium — ideal for Potato, Tomato & Cotton.',
+          low_k: 'Low Potassium — apply MOP (Muriate of Potash).',
+          balanced: '✅ Balanced NPK — Optimal for most crops. Maintain with organic compost.',
+        };
+
+        function suggestion(n, p, k) {
+          if (n > 150 && p > 80 && k > 100) return ROTATIONS.balanced;
+          if (n < 40) return ROTATIONS.low_n;
+          if (n > 150) return ROTATIONS.high_n;
+          if (p < 30) return ROTATIONS.low_p;
+          if (p > 100) return ROTATIONS.high_p;
+          if (k < 40) return ROTATIONS.low_k;
+          if (k > 120) return ROTATIONS.high_k;
+          return ROTATIONS.balanced;
+        }
+
+        function updateViz(n, p, k) {
+          const maxV = 200;
+          document.getElementById('sv-n').style.width = clamp((n / maxV) * 100, 0, 100) + '%';
+          document.getElementById('sv-p').style.width = clamp((p / maxV) * 100, 0, 100) + '%';
+          document.getElementById('sv-k').style.width = clamp((k / maxV) * 100, 0, 100) + '%';
+          document.getElementById('sv-nv').textContent = n;
+          document.getElementById('sv-pv').textContent = p;
+          document.getElementById('sv-kv').textContent = k;
+          document.getElementById('st-suggestion').textContent = suggestion(n, p, k);
+        }
+
+        function render(profiles) {
+          const el = document.getElementById('st-history');
+          el.innerHTML = profiles.length
+            ? profiles.slice().reverse().map(p =>
+              `<div class="history-item">
+            <div>
+              <strong>${p.field || 'Field'}</strong> — ${p.season}
+              &nbsp;<span class="chip chip-green">N:${p.n}</span>
+              <span class="chip chip-blue">P:${p.p}</span>
+              <span class="chip chip-yellow">K:${p.k}</span>
+            </div>
+            <div class="history-date">${p.date}</div>
+          </div>`).join('')
+            : '<div style="color:var(--muted);font-size:.85rem;padding:8px 0">No profiles saved.</div>';
+        }
+
+        // init from latest saved
+        const existing = loadLS(KEY);
+        if (existing.length) {
+          const last = existing[existing.length - 1];
+          updateViz(last.n, last.p, last.k);
+        }
+        render(existing);
+
+        document.getElementById('st-save-btn').addEventListener('click', function () {
+          if (!validate(['st-n', 'st-p', 'st-k'])) { alert('Please fill NPK values.'); return; }
+          const n = parseFloat(document.getElementById('st-n').value);
+          const p = parseFloat(document.getElementById('st-p').value);
+          const k = parseFloat(document.getElementById('st-k').value);
+          const season = document.getElementById('st-season').value;
+          const field = document.getElementById('st-field').value.trim() || 'Field-A';
+
+          updateViz(n, p, k);
+
+          const profiles = loadLS(KEY);
+          profiles.push({ n, p, k, season, field, date: ts() });
+          if (profiles.length > 40) profiles.shift();
+          saveLS(KEY, profiles);
+          render(profiles);
+        });
+
+        document.getElementById('st-clear-btn').addEventListener('click', function () {
+          if (confirm('Clear soil profile history?')) { saveLS(KEY, []); render([]); }
+        });
+      })();
+
+      // ─── MODULE 3: PEST OUTBREAK ────────────────────────────────
+      (function pestAI() {
+        const KEY = 'agri_pest_history';
+        const PESTS = {
+          Paddy: { high: 'Leaf Blast & Brown Plant Hopper', medium: 'Stem borer', low: 'Minor leaf spots' },
+          Wheat: { high: 'Yellow Rust & Aphids', medium: 'Powdery Mildew', low: 'Minimal risk' },
+          Maize: { high: 'Fall Armyworm & Corn Borer', medium: 'Leaf Blight', low: 'Minimal risk' },
+          Cotton: { high: 'Pink Bollworm & Whitefly', medium: 'Jassids', low: 'Minimal risk' },
+          Tomato: { high: 'Late Blight & Leaf Curl Virus', medium: 'Fruit borer', low: 'Minimal risk' },
+          Potato: { high: 'Late Blight & Colorado Beetle', medium: 'Early blight', low: 'Minimal risk' },
+          Soybean: { high: 'Soybean Mosaic Virus & Pod borer', medium: 'Whitefly', low: 'Minimal risk' },
+          Sugarcane: { high: 'Red Rot & Top Borer', medium: 'Pyrilla', low: 'Minimal risk' },
+        };
+        const ACTIONS = {
+          high: '🚨 Apply preventive / curative spray immediately. Isolate affected plants. Contact agronomist.',
+          medium: '⚠️ Monitor closely. Apply preventive spray at next irrigation cycle.',
+          low: '✅ Continue normal practices. Routine monitoring sufficient.',
+        };
+
+        function calcRisk(hum, temp, rain) {
+          let score = 0;
+          if (hum > 80) score += 35;
+          else if (hum > 65) score += 20;
+          else score += 5;
+          if (temp > 30) score += 30;
+          else if (temp > 25) score += 18;
+          else score += 5;
+          if (rain > 50) score += 25;
+          else if (rain > 20) score += 12;
+          score += Math.random() * 5; // slight variation
+          return clamp(Math.round(score), 0, 100);
+        }
+
+        function riskLevel(score) {
+          if (score >= 65) return 'high';
+          if (score >= 35) return 'medium';
+          return 'low';
+        }
+
+        function render(history) {
+          const el = document.getElementById('po-history');
+          el.innerHTML = history.length
+            ? history.slice().reverse().map(h =>
+              `<div class="history-item">
+            <div><strong>${h.crop}</strong> — Hum:${h.hum}% Temp:${h.temp}°C
+            &nbsp;<span class="chip ${h.level === 'high' ? 'chip-red' : h.level === 'medium' ? 'chip-yellow' : 'chip-green'}">${h.level.toUpperCase()} ${h.score}%</span></div>
+            <div class="history-date">${h.date}</div>
+          </div>`).join('')
+            : '<div style="color:var(--muted);font-size:.85rem;padding:8px 0">No assessments yet.</div>';
+        }
+
+        document.getElementById('po-calc-btn').addEventListener('click', function () {
+          if (!validate(['po-hum', 'po-temp', 'po-crop'])) { alert('Please fill all fields.'); return; }
+          const hum = parseFloat(document.getElementById('po-hum').value);
+          const temp = parseFloat(document.getElementById('po-temp').value);
+          const crop = document.getElementById('po-crop').value;
+          const rain = parseFloat(document.getElementById('po-rain').value) || 0;
+
+          const score = calcRisk(hum, temp, rain);
+          const level = riskLevel(score);
+          const cropPests = PESTS[crop] || { high: 'Various pests', medium: 'Moderate risk pests', low: 'Minimal pests' };
+          const pestName = cropPests[level];
+
+          const alertEl = document.getElementById('po-alert');
+          alertEl.className = `alert show alert-${level === 'high' ? 'high' : level === 'medium' ? 'medium' : 'low'}`;
+          const icons = { high: '🔴', medium: '🟡', low: '🟢' };
+          alertEl.innerHTML = `${icons[level]} <strong>${level.toUpperCase()} RISK:</strong> Detected risk of <strong>${pestName}</strong>`;
+
+          const barColour = level === 'high' ? 'fill-red' : level === 'medium' ? '' : 'fill-green';
+          const bar = document.getElementById('po-risk-bar');
+          bar.className = `prog-fill ${level === 'medium' ? '' : barColour}`;
+          if (level === 'medium') bar.style.background = 'linear-gradient(90deg,#ffc107,#ff9800)';
+          bar.style.width = score + '%';
+
+          document.getElementById('po-result-text').textContent =
+            `${level === 'high' ? 'High' : level === 'medium' ? 'Moderate' : 'Low'} risk of ${pestName}. Risk Score: ${score}%.`;
+          document.getElementById('po-chips').innerHTML = `
+        <span class="chip chip-blue">💧 Humidity ${hum}%</span>
+        <span class="chip chip-yellow">🌡️ Temp ${temp}°C</span>
+        <span class="chip chip-blue">🌧️ Rain ${rain}mm</span>`;
+          document.getElementById('po-actions').textContent = ACTIONS[level];
+
+          const res = document.getElementById('po-result');
+          res.classList.add('show');
+
+          const history = loadLS(KEY);
+          history.push({ crop, hum, temp, rain, score, level, date: ts() });
+          if (history.length > 40) history.shift();
+          saveLS(KEY, history);
+          render(history);
+        });
+
+        document.getElementById('po-clear-btn').addEventListener('click', function () {
+          if (confirm('Clear pest assessment history?')) { saveLS(KEY, []); render([]); }
+        });
+
+        render(loadLS(KEY));
+      })();
+
+      // ─── MODULE 4: MANDI PRICE FORECASTING ─────────────────────
+      (function mandiPrice() {
+        const PRICE_DATA = {
+          Wheat: [2200, 2280, 2310, 2250, 2320, 2400],
+          Rice: [2100, 2050, 2120, 2200, 2180, 2260],
+          Maize: [1900, 1980, 1850, 1920, 2000, 2080],
+          Cotton: [6200, 6500, 6450, 6800, 6700, 6900],
+          Soybean: [4200, 4350, 4400, 4300, 4500, 4600],
+          Potato: [1100, 980, 1050, 1200, 1150, 1300],
+          Onion: [1600, 1800, 2000, 1700, 1900, 2100],
+          Tomato: [1200, 1500, 1100, 1400, 1600, 1350],
+        };
+
+        function forecast(prices) {
+          const n = prices.length;
+          const sumX = (n * (n - 1)) / 2;
+          const sumY = prices.reduce((a, b) => a + b, 0);
+          const sumXY = prices.reduce((s, p, i) => s + i * p, 0);
+          const sumX2 = prices.reduce((s, _, i) => s + i * i, 0);
+          const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+          const intercept = (sumY - slope * sumX) / n;
+          const predicted = intercept + slope * n;
+          const pctChange = ((predicted - prices[n - 1]) / prices[n - 1]) * 100;
+          return { predicted: Math.round(predicted), pctChange: parseFloat(pctChange.toFixed(1)) };
+        }
+
+        document.getElementById('mp-btn').addEventListener('click', function () {
+          const crop = document.getElementById('mp-crop').value;
+          const mandi = document.getElementById('mp-mandi').value;
+          const prices = PRICE_DATA[crop];
+          const weeks = ['W-6', 'W-5', 'W-4', 'W-3', 'W-2', 'Last Wk'];
+          const { predicted, pctChange } = forecast(prices);
+
+          const direction = pctChange > 1.5 ? 'increase' : pctChange < -1.5 ? 'decrease' : 'remain stable';
+          const icon = pctChange > 1.5 ? '📈' : pctChange < -1.5 ? '📉' : '↔️';
+
+          document.getElementById('mp-result-text').textContent =
+            `${crop} at ${mandi}: Price likely to ${direction} ${Math.abs(pctChange)}% next week. Forecast: ₹${predicted.toLocaleString('en-IN')}/quintal`;
+
+          const pct = pctChange;
+          document.getElementById('mp-chips').innerHTML = `
+        <span class="chip ${pct > 0 ? 'chip-green' : 'chip-red'}">${icon} ${pct > 0 ? '+' : ''}${pct}%</span>
+        <span class="chip chip-blue">₹${predicted.toLocaleString('en-IN')}/qt</span>
+        <span class="chip chip-yellow">📍 ${mandi}</span>`;
+
+          const tbody = document.getElementById('mp-tbody');
+          tbody.innerHTML = prices.map((price, i) => {
+            const prev = i > 0 ? prices[i - 1] : price;
+            const chg = i > 0 ? (((price - prev) / prev) * 100).toFixed(1) : '—';
+            const cls = i > 0 ? (price > prev ? 'up' : price < prev ? 'down' : 'stable') : 'stable';
+            const arrow = i > 0 ? (price > prev ? '▲' : price < prev ? '▼' : '→') : '—';
+            return `<tr>
+          <td>${weeks[i]}</td>
+          <td><strong>₹${price.toLocaleString('en-IN')}</strong></td>
+          <td class="${cls}">${i > 0 ? (price > prev ? '+' : '') + chg + '%' : '—'}</td>
+          <td class="${cls}">${arrow}</td>
+        </tr>`;
+          }).join('') + `<tr style="background:rgba(46,204,113,.1);">
+        <td><strong>Next Wk (Est.)</strong></td>
+        <td><strong>₹${predicted.toLocaleString('en-IN')}</strong></td>
+        <td class="${pctChange > 0 ? 'up' : 'down'}">${pctChange > 0 ? '+' : ''}${pctChange}%</td>
+        <td class="${pctChange > 0 ? 'up' : 'down'}">${pctChange > 0 ? '▲' : '▼'} Forecast</td>
+      </tr>`;
+
+          document.getElementById('mp-result').classList.add('show');
+        });
+      })();
+
+    })();
+  </script>
+</body>
+
+</html>
