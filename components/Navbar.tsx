@@ -120,14 +120,19 @@ const Navbar: React.FC = () => {
   };
 
   const navItems = useMemo(() => {
+    const cropIntelligenceItem = { label: 'Crop Intelligence', path: '/crop-intelligence' };
+
     const baseItems = [
       { label: t('nav_home'), path: '/' },
-      { label: t('nav_guardian'), path: '/guardian' }
+      { label: t('nav_guardian'), path: '/guardian' },
+      cropIntelligenceItem,
     ];
 
     if (role === 'Officer') {
       return [
-        ...baseItems,
+        { label: t('nav_home'), path: '/' },
+        { label: t('nav_guardian'), path: '/guardian' },
+        cropIntelligenceItem,
         { label: t('nav_dashboard'), path: '/dashboard' },
         { label: t('nav_tech'), path: '/technical' }
       ];
@@ -138,6 +143,7 @@ const Navbar: React.FC = () => {
       return [
         { label: t('nav_home'), path: '/' },
         { label: t('nav_guardian'), path: '/guardian' },
+        cropIntelligenceItem,
         { label: t('nav_elam'), path: '/elam' },
         { label: t('nav_query'), path: '/query' },
       ];
@@ -380,6 +386,14 @@ const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/crop-intelligence"
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-bold ${location.pathname === '/crop-intelligence' ? 'bg-emerald-800 text-white' : 'text-stone-300'}`}
+            >
+              <i className="fas fa-seedling text-green-400" />
+              Crop Intelligence
+            </Link>
             {!role && (
               <Link
                 to="/login"

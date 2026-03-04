@@ -27,6 +27,7 @@ import SmartIrrigationDashboard from './pages/SmartIrrigationDashboard.tsx';
 import HardwareControl from './pages/HardwareControl.tsx';
 import HardwareDashboard from './pages/HardwareDashboard.tsx';
 import MandiPriceForecast from './pages/MandiPriceForecast.tsx';
+import CropLifecycle from './pages/CropLifecycle.tsx';
 import { LanguageProvider } from './context/LanguageContext.tsx';
 import { CartProvider } from './context/CartContext.tsx';
 
@@ -126,6 +127,7 @@ const App: React.FC = () => {
                   <Route path="/smart-irrigation-login" element={<SmartIrrigationLogin />} />
                   <Route path="/smart-irrigation-dashboard" element={<SmartIrrigationDashboard />} />
                   <Route path="/mandi-forecast" element={<MandiPriceForecast />} />
+                  <Route path="/crop-intelligence" element={<CropLifecycle />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </main>
